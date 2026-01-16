@@ -3,11 +3,13 @@ import authRoutes from './routes/authRoutes';
 import chatRoutes from './routes/chatRoutes';
 import messageRoutes from './routes/messageRoutes';
 import userRoutes from './routes/userRoutes';
+import { clerkMiddleware } from '@clerk/express';
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
 app.use(json());
-
+app.use(clerkMiddleware());
 app.get('/hello', (req, res) => {
   res.json({
     status: 'OK',
@@ -19,5 +21,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chats', chatRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
+
+// error handlers must be last middleware
+app.use(errorHandler);
 
 export default app;
