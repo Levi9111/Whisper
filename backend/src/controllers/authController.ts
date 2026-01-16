@@ -7,6 +7,10 @@ const getMe = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = req.userId;
 
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     const user = await User.findById(userId).select(
       '-__v -createdAt -updatedAt -clerkId',
     );
@@ -16,8 +20,7 @@ const getMe = async (req: AuthRequest, res: Response, next: NextFunction) => {
     }
     res.status(200).json(user);
   } catch (error) {
-    res.status(500);
-    next();
+    return next(error);
   }
 };
 
@@ -47,11 +50,11 @@ const authCallback = async (
         avatar: clerkUser.imageUrl,
       });
 
-      res.status(201).json(user);
+      return res.status(201).json(user);
     }
+    return res.status(201).json(user);
   } catch (error) {
-    res.status(500);
-    next();
+    return next(error);
   }
 };
 
