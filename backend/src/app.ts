@@ -13,7 +13,7 @@ app.use(clerkMiddleware());
 app.get('/hello', (req, res) => {
   res.json({
     status: 'OK',
-    message: 'Hello, World!',
+    message: 'Hello World!',
   });
 });
 

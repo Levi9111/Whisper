@@ -1,0 +1,7 @@
+1. replace all the trycatch block with catchAsync
+
+2. Replace the globalErrorHandler with my own
+
+3. Replace the AuthRequest type and declare a global type on Request
+
+4. Re arrange the folder structure for controllers routes. Add modular structure
