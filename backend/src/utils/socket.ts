@@ -16,8 +16,8 @@ export const initializeSocket = (httpServer: HttpServer) => {
   const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:8081',
-    process.env.FRONTEND_URL!,
-  ];
+    process.env.FRONTEND_URL,
+  ].filter(Boolean) as string[];
 
   const io = new SockerServer(httpServer, {
     cors: { origin: allowedOrigins },
@@ -40,7 +40,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
 
       if (!user) return next(new Error('User not found'));
 
-      (socket as SocketWithUserId).userId == user._id.toString();
+      (socket as SocketWithUserId).userId = user._id.toString();
 
       next();
     } catch (error: any) {
