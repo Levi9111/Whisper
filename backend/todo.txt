@@ -5,3 +5,5 @@
 3. Replace the AuthRequest type and declare a global type on Request
 
 4. Re arrange the folder structure for controllers routes. Add modular structure
+
+5. *** We will implement WebRtc for video calling
