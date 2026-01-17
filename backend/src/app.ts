@@ -1,3 +1,4 @@
+import path from 'path';
 import express, { json } from 'express';
 import authRoutes from './routes/authRoutes';
 import chatRoutes from './routes/chatRoutes';
@@ -24,5 +25,14 @@ app.use('/api/users', userRoutes);
 
 // error handlers must be last middleware
 app.use(errorHandler);
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../web/dist')));
+
+  app.get('/{*any}', (_req, res) => {
+    res.sendFile(path.join(__dirname, '../../web/dist/index.html'));
+  });
+}
 
 export default app;

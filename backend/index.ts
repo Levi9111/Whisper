@@ -3,7 +3,7 @@ import { connectDB } from './src/config/database';
 import { createServer } from 'http';
 import { initializeSocket } from './src/utils/socket';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const httpServere = createServer(app);
 
