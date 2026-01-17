@@ -10,8 +10,8 @@ const app = express();
 
 app.use(json());
 app.use(clerkMiddleware());
-app.get('/hello', (req, res) => {
-  res.json({
+app.get('/hello', (_req, res) => {
+  return res.json({
     status: 'OK',
     message: 'Hello World!',
   });
