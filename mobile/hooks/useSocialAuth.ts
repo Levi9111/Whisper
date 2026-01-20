@@ -1,13 +1,15 @@
 import { useSSO } from '@clerk/clerk-expo';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Alert } from 'react-native';
 
 const useAuthSocial = () => {
   const [loadingStrategy, setLoadingStrategy] = useState<string | null>(null);
+  const inFlightRef = useRef(false);
   const { startSSOFlow } = useSSO();
 
   const handleSocialAuth = async (strategy: 'oauth_google' | 'oauth_apple') => {
-    setLoadingStrategy(strategy);
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
 
     try {
       const { createdSessionId, setActive } = await startSSOFlow({ strategy });
@@ -23,6 +25,7 @@ const useAuthSocial = () => {
         `Failed to authenticate with ${provider}. Please try again.`,
       );
     } finally {
+      inFlightRef.current = false;
       setLoadingStrategy(null);
     }
   };
