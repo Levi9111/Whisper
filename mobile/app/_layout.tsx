@@ -1,13 +1,40 @@
 import '../global.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ClerkProvider } from '@clerk/clerk-expo';
+import { tokenCache } from '@clerk/clerk-expo/token-cache';
 
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }} />
-    </QueryClientProvider>
+    <ClerkProvider tokenCache={tokenCache}>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: {
+                backgroundColor: '#0D0D0F',
+              },
+            }}
+          >
+            <Stack.Screen
+              name='(auth)'
+              options={{
+                animation: 'fade',
+              }}
+            />
+            <Stack.Screen
+              name='(tabs)'
+              options={{
+                animation: 'fade',
+              }}
+            />
+          </Stack>
+        </SafeAreaProvider>
+      </QueryClientProvider>
+    </ClerkProvider>
   );
 }
