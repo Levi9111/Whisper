@@ -1,6 +1,7 @@
 import { useSSO } from '@clerk/clerk-expo';
 import { useState, useRef } from 'react';
 import { Alert } from 'react-native';
+import { router } from 'expo-router';
 
 const useAuthSocial = () => {
   const [loadingStrategy, setLoadingStrategy] = useState<string | null>(null);
@@ -16,6 +17,9 @@ const useAuthSocial = () => {
 
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
+
+        router.replace('/(tabs)');
+        return;
       }
     } catch (error) {
       console.error('Social auth error:', error);
