@@ -1,5 +1,6 @@
-import { useApi } from '@/lib/axion';
 import { useMutation } from '@tanstack/react-query';
+
+import { useApi } from '@/lib/axios';
 
 export const useAuthCallback = () => {
   const api = useApi();

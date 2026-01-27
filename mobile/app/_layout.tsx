@@ -1,12 +1,18 @@
-import '../global.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
+import * as Sentry from '@sentry/react-native';
+
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import AuthSync from '@/components/AuthSync';
-import { StatusBar } from 'expo-status-bar';
-import * as Sentry from '@sentry/react-native';
+
+import '../global.css';
 
 Sentry.init({
   dsn: 'https://a64b93b528cac1447168ab3a902c0b46@o4508274609225728.ingest.us.sentry.io/4510743621730304',
@@ -21,7 +27,14 @@ Sentry.init({
   // Configure Session Replay
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1,
-  integrations: [Sentry.mobileReplayIntegration()],
+  integrations: [
+    Sentry.mobileReplayIntegration(),
+    Sentry.reactNativeTracingIntegration({
+      traceFetch: true,
+      traceXHR: true,
+      enableHTTPTimings: true,
+    }),
+  ],
 
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
   // spotlight: __DEV__,
