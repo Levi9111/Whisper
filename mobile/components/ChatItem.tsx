@@ -22,9 +22,7 @@ const ChatItem = ({ chat, onPress }: { chat: Chat; onPress: () => void }) => {
     >
       <View className='relative'>
         <Image
-          source={{
-            uri: participant.avatar,
-          }}
+          source={participant.avatar}
           style={{
             width: 56,
             height: 56,

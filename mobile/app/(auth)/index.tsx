@@ -1,13 +1,22 @@
+import { Ionicons } from '@expo/vector-icons';
+
 import {
-  View,
-  Dimensions,
-  Text,
-  Pressable,
   ActivityIndicator,
+  Dimensions,
+  Pressable,
+  Text,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { BlurView } from 'expo-blur';
 import { Image } from 'expo-image';
-import { Ionicons } from '@expo/vector-icons';
+
+import {
+  AnimatedOrb,
+  OrbBackground,
+  OrbPresets,
+} from '@/components/AnimatedOrb';
 import useAuthSocial from '@/hooks/useSocialAuth';
 
 const { width, height } = Dimensions.get('window');
@@ -19,9 +28,55 @@ const AuthScreen = () => {
 
   return (
     <View className='flex-1 bg-surface-dark'>
-      {/*TODO: Animated Orbs */}
+      <View className='absolute inset-0 overflow-hidden'>
+        <AnimatedOrb
+          colors={['#F4A261', '#E76F51']}
+          size={300}
+          initialX={-80}
+          initialY={height * 0.1}
+          duration={4000}
+        />
+        <AnimatedOrb
+          colors={['#8B5CF6', '#6366F1']}
+          size={120}
+          initialX={50}
+          initialY={100}
+          duration={4000}
+        />
+        <AnimatedOrb
+          {...OrbPresets.purple}
+          size={120}
+          initialX={50}
+          initialY={100}
+        />
+        <AnimatedOrb
+          colors={['#FF6B6B', '#FFE66D']}
+          size={150}
+          initialX={0}
+          initialY={0}
+          duration={3000}
+          opacity={0.4}
+          xRange={50}
+          yRange={30}
+          scaleMin={0.8}
+          scaleMax={1.3}
+          blur={true}
+          zIndex={5}
+        />
+        <OrbBackground
+          orbs={[
+            { preset: 'purple', size: 120, x: 0, y: 20 },
+            { preset: 'pink', size: 100, x: 250, y: 60, opacity: 0.3 },
+            { preset: 'cyan', size: 80, x: 200, y: 150 },
+          ]}
+        />
+        <BlurView
+          intensity={70}
+          tint='dark'
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
+        />
+      </View>
 
-      <View className='absolute inset-0 overflow-hidden'></View>
       <SafeAreaView className='flex-1'>
         {/* Top section */}
         <View className='items-center pt-10'>
